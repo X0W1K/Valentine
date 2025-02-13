@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валентинка для Айнуры</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url(186.jpg) no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .heart-container {
+            position: relative;
+            text-align: center;
+            width: 200px;
+            height: 200px;
+        }
+
+        .heart {
+            width: 100%;
+            height: 100%;
+            background-color: red;
+            position: relative;
+            transform: rotate(-45deg);
+            box-shadow: -10px 10px 90px rgba(255, 0, 0, 0.6);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart:before {
+            top: -50%;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 50%;
+            top: 0;
+        }
+
+        .message {
+            position: absolute;
+            top: -10px; /* Надпись ещё чуть ниже */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 15px; /* Уменьшенный размер текста */
+            color: white;
+            white-space: nowrap;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 20px;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .button-74 {
+            background-color: #8B0000;
+            border: 2px solid #5A0000;
+            border-radius: 30px;
+            box-shadow: #5A0000 4px 4px 0 0;
+            color: #ffffff;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 0 18px;
+            line-height: 50px;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .button-74:hover {
+            background-color: #A52A2A;
+        }
+
+        .button-74:active {
+            box-shadow: #5A0000 2px 2px 0 0;
+            transform: translate(2px, 2px);
+        }
+
+        @keyframes falling-hearts {
+            0% { transform: translateY(-100px) scale(1); opacity: 1; }
+            100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+        }
+
+        .heart-rain {
+            position: absolute;
+            top: -50px;
+            color: red;
+            font-size: 20px;
+            opacity: 0.8;
+            animation: falling-hearts 5s linear infinite;
+        }
+
+        /* Анимация для нового сердечка */
+        @keyframes heartOpen {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            100% { transform: scale(1) rotate(-45deg); opacity: 1; }
+        }
+
+        .new-heart {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            position: relative;
+            margin: auto;
+            transform: rotate(-45deg);
+            box-shadow: -10px 10px 90px rgba(255, 0, 0, 0.6);
+            animation: heartOpen 1s ease forwards;
+        }
+
+        .new-heart:before,
+        .new-heart:after {
+            content: '';
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .new-heart:before {
+            top: -100px;
+            left: 0;
+        }
+
+        .new-heart:after {
+            left: 100px;
+            top: 0;
+        }
+
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 720px) {
+            .heart-container {
+                width: 150px;
+                height: 150px;
+            }
+
+            .heart, .new-heart {
+                width: 150px;
+                height: 150px;
+            }
+
+            .heart:before, .heart:after,
+            .new-heart:before, .new-heart:after {
+                width: 150px;
+                height: 150px;
+            }
+
+            .heart:before, .new-heart:before {
+                top: -75px;
+            }
+
+            .heart:after, .new-heart:after {
+                left: 75px;
+            }
+
+            .message {
+                font-size: 16px; /* Уменьшаем размер текста для мобильных */
+                top: -5px; /* Корректируем положение текста */
+            }
+
+            .button-74 {
+                font-size: 16px; /* Уменьшаем размер кнопок для мобильных */
+                padding: 0 15px;
+                line-height: 40px;
+            }
+
+            .heart-container {
+                transform: translateY(-20%); /* Сдвигаем контейнер вверх для центрирования */
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Дождь из сердечек
+        function createHeartRain() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-rain');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeartRain, 500);
+    </script>
+
+    <div class="heart-container">
+        <div class="heart"></div>
+        <div class="message">Айнура, ты будешь моей валентинкой?</div>
+        <div class="button-container">
+            <button class="button-74" onclick="chooseYes()">ДА</button>
+            <button class="button-74" onclick="chooseNo()">НЕТ</button>
+        </div>
+    </div>
+
+    <script>
+        // Обработка нажатия на "ДА"
+        function chooseYes() {
+            const heartContainer = document.querySelector('.heart-container');
+            const heart = document.querySelector('.heart');
+            const message = document.querySelector('.message');
+            const buttons = document.querySelector('.button-container');
+
+            // Анимация исчезновения старого сердечка, текста и кнопок
+            heart.style.transform = 'scale(0)';
+            heart.style.opacity = '0';
+            message.style.opacity = '0';
+            buttons.style.opacity = '0';
+
+            // Создаём новое сердечко без текста
+            setTimeout(() => {
+                heartContainer.innerHTML = `<div class="new-heart"></div>`;
+            }, 500);
+        }
+
+        // Обработка нажатия на "НЕТ"
+        function chooseNo() {
+            alert('Подумай ещё раз! ❤️');
+        }
+    </script>
+</body>
+</html>
