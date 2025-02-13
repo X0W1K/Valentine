@@ -135,6 +135,7 @@
             transform: rotate(-45deg);
             box-shadow: -10px 10px 90px rgba(255, 0, 0, 0.6);
             animation: heartOpen 1s ease forwards;
+            cursor: pointer; /* Добавляем курсор, чтобы было понятно, что сердечко кликабельно */
         }
 
         .new-heart:before,
@@ -160,6 +161,25 @@
         /* Стили для нового сообщения */
         .love-message {
             position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px; /* Уменьшенный размер текста */
+            color: white;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            width: 80%; /* Ограничиваем ширину текста */
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Стили для скрытого сообщения */
+        .hidden-message {
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -167,12 +187,30 @@
             color: white;
             text-align: center;
             opacity: 0;
-            animation: fadeIn 2s ease 1s forwards;
+            animation: fadeIn 1s ease forwards;
+            width: 80%;
+            display: none; /* Сначала скрыто */
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        /* Стили для формы */
+        .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            display: none; /* Сначала скрыто */
+        }
+
+        .form-container iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
         }
 
         /* Адаптация для мобильных устройств */
@@ -217,7 +255,16 @@
             }
 
             .love-message {
+                font-size: 14px; /* Уменьшаем размер текста для мобильных */
+            }
+
+            .hidden-message {
                 font-size: 18px; /* Уменьшаем размер текста для мобильных */
+            }
+
+            .form-container {
+                width: 90%;
+                padding: 15px;
             }
         }
     </style>
@@ -246,6 +293,11 @@
         </div>
     </div>
 
+    <!-- Контейнер для формы -->
+    <div class="form-container" id="form-container">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe9LP17BUkklvZ0QdEzMtGaohf7JDmpjXcFwFtlY-ZlSX-Wjw/viewform?usp=dialog" frameborder="0" marginheight="0" marginwidth="0">Загрузка…</iframe>
+    </div>
+
     <script>
         // Обработка нажатия на "ДА"
         function chooseYes() {
@@ -265,19 +317,25 @@
                 heartContainer.innerHTML = `<div class="new-heart"></div>`;
             }, 500);
 
-            // Добавляем красивое сообщение через 2 секунды
-            setTimeout(() => {
-                const loveMessage = document.createElement('div');
-                loveMessage.classList.add('love-message');
-                loveMessage.innerHTML = `
-                    <p>Ты моя сладкая булочка, знай что я тебя безумно люблю❤️</p>
-                    <p></p>
-                `;
-                document.body.appendChild(loveMessage);
+            // Добавляем красивое сообщение сразу после анимации
+            const loveMessage = document.createElement('div');
+            loveMessage.classList.add('love-message');
+            loveMessage.innerHTML = `
+                <p>Ты моя сладкая булочка, <br> знай что я тебя безумно люблю❤️</p>
+            `;
+            document.body.appendChild(loveMessage);
 
-                // Увеличиваем количество сердечек в дожде
-                setInterval(createHeartRain, 100);
-            }, 2000);
+            // Увеличиваем количество сердечек в дожде
+            setInterval(createHeartRain, 100);
+
+            // Добавляем обработчик клика на новое сердечко
+            setTimeout(() => {
+                const newHeart = document.querySelector('.new-heart');
+                newHeart.addEventListener('click', () => {
+                    const formContainer = document.getElementById('form-container');
+                    formContainer.style.display = 'block'; // Показываем форму
+                });
+            }, 1000);
         }
 
         // Обработка нажатия на "НЕТ"
