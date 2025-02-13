@@ -157,6 +157,24 @@
             top: 0;
         }
 
+        /* Стили для нового сообщения */
+        .love-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s ease 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
         /* Адаптация для мобильных устройств */
         @media (max-width: 720px) {
             .heart-container {
@@ -196,6 +214,10 @@
 
             .heart-container {
                 transform: translateY(-20%); /* Сдвигаем контейнер вверх для центрирования */
+            }
+
+            .love-message {
+                font-size: 18px; /* Уменьшаем размер текста для мобильных */
             }
         }
     </style>
@@ -242,6 +264,20 @@
             setTimeout(() => {
                 heartContainer.innerHTML = `<div class="new-heart"></div>`;
             }, 500);
+
+            // Добавляем красивое сообщение через 2 секунды
+            setTimeout(() => {
+                const loveMessage = document.createElement('div');
+                loveMessage.classList.add('love-message');
+                loveMessage.innerHTML = `
+                    <p>Ты моя сладкая булочка, знай что я тебя безумно люблю❤️</p>
+                    <p></p>
+                `;
+                document.body.appendChild(loveMessage);
+
+                // Увеличиваем количество сердечек в дожде
+                setInterval(createHeartRain, 100);
+            }, 2000);
         }
 
         // Обработка нажатия на "НЕТ"
